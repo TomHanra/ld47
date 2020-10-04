@@ -89,16 +89,14 @@ export default class LevelOne extends Phaser.Scene {
 		this.level_label = this.add.text(825, 25, "").setScale(1.5)
 		this.bee_tracker = this.add.text(825, 75, "").setScale(1.5)
 
-		this.add.text(825, 165, "Controls:  W,A,S,D")
+		this.add.text(825, 165, "Keyboard:  W,A,S,D")
 		this.add.text(825, 195, "                 or ↑←↓→")
 		this.add.text(825, 220, "Pause: <space>")
-		this.add.text(825, 280, "Or use the")
-		this.add.text(825, 310, "buttons below")
 
-		this.left = this.add.image(800, 425, "btn-left").setScale(0.85).setOrigin(0,0).setInteractive()
-		this.down = this.add.image(870, 510, "btn-down").setScale(0.85).setOrigin(0,0).setInteractive()
-		this.right = this.add.image(940, 425, "btn-right").setScale(0.85).setOrigin(0,0).setInteractive()
-		this.up = this.add.image(870, 340, "btn-up").setScale(0.85).setOrigin(0,0).setInteractive()
+		this.left = this.add.image(800, 400, "btn-left").setScale(1).setOrigin(0,0).setInteractive()
+		this.down = this.add.image(860, 500, "btn-down").setScale(1).setOrigin(0,0).setInteractive()
+		this.right = this.add.image(920, 400, "btn-right").setScale(1).setOrigin(0,0).setInteractive()
+		this.up = this.add.image(860, 300, "btn-up").setScale(1).setOrigin(0,0).setInteractive()
 		var self = this
 		this.left.on('pointerdown', () => self.goLeft() )
 		this.right.on('pointerdown', () => self.goRight() )
