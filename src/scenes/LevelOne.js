@@ -48,7 +48,6 @@ export default class LevelOne extends Phaser.Scene {
 		this.load.image('btn-down', 'images/down.png')
 		this.load.image('btn-left', 'images/left.png')
 		this.load.image('btn-right', 'images/right.png')
-		this.load.image('background', 'images/background.png')
 		this.load.image('map-'+this.level_id, 'levels/level'+ this.level_id + '.png')
 		this.load.audio("beep", "sfx/beep.wav")
 		this.load.audio("death", "sfx/death.wav")
@@ -225,8 +224,10 @@ export default class LevelOne extends Phaser.Scene {
 			this.bee_parts.push(new_part)
 			self = this
 			new_part.collider = this.physics.add.collider(this.bee, new_part, function(_bee, _new_part) {
-				console.log("hit swarm", self.x_direction, self.y_direction)
-				self.fail()
+				if(self.parts_to_add <= 0) {
+					console.log("hit swarm", self.x_direction, self.y_direction)
+					self.fail()
+				}
 			})
 			this.updateBeeTracker()
 			this.parts_to_add--
