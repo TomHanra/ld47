@@ -85,10 +85,10 @@ export default class LevelOne extends Phaser.Scene {
 		this.add.text(825, 280, "Or use the")
 		this.add.text(825, 310, "buttons below")
 
-		this.left = this.add.image(810, 425, "btn-left").setScale(0.7).setOrigin(0,0).setInteractive()
-		this.down = this.add.image(875, 510, "btn-down").setScale(0.7).setOrigin(0,0).setInteractive()
-		this.right = this.add.image(940, 425, "btn-right").setScale(0.7).setOrigin(0,0).setInteractive()
-		this.up = this.add.image(875, 340, "btn-up").setScale(0.7).setOrigin(0,0).setInteractive()
+		this.left = this.add.image(810, 425, "btn-left").setScale(0.75).setOrigin(0,0).setInteractive()
+		this.down = this.add.image(875, 510, "btn-down").setScale(0.75).setOrigin(0,0).setInteractive()
+		this.right = this.add.image(940, 425, "btn-right").setScale(0.75).setOrigin(0,0).setInteractive()
+		this.up = this.add.image(875, 340, "btn-up").setScale(0.75).setOrigin(0,0).setInteractive()
 		var self = this
 		this.left.on('pointerdown', () => self.goLeft() )
 		this.right.on('pointerdown', () => self.goRight() )
