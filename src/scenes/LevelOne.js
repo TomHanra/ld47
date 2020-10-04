@@ -8,6 +8,9 @@ export default class LevelOne extends Phaser.Scene {
 		this.default_parts_to_add = 6
 		this.bee_goal = 60
 		this.move_delay = 100
+		this.wallMap = []
+		this.bee_start_x = undefined
+		this.bee_start_y = undefined
 		this.doReset()
 	}
 
@@ -72,8 +75,7 @@ export default class LevelOne extends Phaser.Scene {
 		this.scene.restart()
 	}
 
-  create() {
-		this.cameras.main.setBackgroundColor(new Phaser.Display.Color(50,100,10))
+	createMenu() {
 		// add interface
 		this.add.rectangle(800, 0, 224, 600, new Phaser.Display.Color(0,0,0)).setOrigin(0,0)
 		this.level_label = this.add.text(825, 25, "").setScale(1.5)
@@ -94,27 +96,41 @@ export default class LevelOne extends Phaser.Scene {
 		this.right.on('pointerdown', () => self.goRight() )
 		this.down.on('pointerdown', () => self.goDown() )
 		this.up.on('pointerdown', () => self.goUp() )
+	}
 
-
+  create() {
+		this.cameras.main.setBackgroundColor(new Phaser.Display.Color(50,100,10))
+		this.createMenu()
 		this.beep = this.sound.add('beep')
 		this.death = this.sound.add('death')
 		this.success = this.sound.add('next_level')
 
 		this.walls = this.physics.add.staticGroup()
-		for (var i = 0; i < 80; i++) {
-			for (var j = 0; j < 60; j++) {
-				var pixel_value = this.textures.getPixel(i, j, 'map-'+this.level_id)
-				if (!pixel_value || pixel_value.g > 200) {
-					this.walls.create(i*10, j*10, 'wall-' + Math.ceil(Math.random()*6))
-				} else if (pixel_value.r == 150) {
-					this.bee = this.physics.add.sprite(i*10, j*10, 'bee')
+		if (this.wallMap.length == 0) {
+			for (var i = 0; i < 80; i++) {
+				for (var j = 0; j < 60; j++) {
+					var pixel_value = this.textures.getPixel(i, j, 'map-'+this.level_id)
+					if (!pixel_value || pixel_value.g > 200) {
+						var idx = Math.ceil(Math.random()*6)
+						if (!this.wallMap[idx]) this.wallMap[idx] = []
+						this.wallMap[idx].push([i, j])
+					} else if (pixel_value.r == 150) {
+						this.bee_start_x = i*10
+						this.bee_start_y = j*10
+					}
 				}
 			}
 		}
+		var self = this
+		for (const idx of this.wallMap.keys()) {
+			if (this.wallMap[idx]) {
+				this.wallMap[idx].forEach(pair => this.walls.create(pair[0]*10, pair[1]*10, 'wall-' + idx))
+			}
+		}
+		this.bee = this.physics.add.sprite(this.bee_start_x, this.bee_start_y, 'bee').setScale(1.5)
 
 		var self = this
 		this.physics.add.collider(this.bee, this.walls, function(_bee, _wall) {
-			console.log("hit wall")
 			self.fail()
 		})
 
@@ -225,7 +241,6 @@ export default class LevelOne extends Phaser.Scene {
 			self = this
 			new_part.collider = this.physics.add.collider(this.bee, new_part, function(_bee, _new_part) {
 				if(self.parts_to_add <= 0) {
-					console.log("hit swarm", self.x_direction, self.y_direction)
 					self.fail()
 				}
 			})
@@ -258,7 +273,7 @@ export default class LevelOne extends Phaser.Scene {
 			self.addFlower()
 		})
 		this.time.addEvent({
-			delay: 10000,
+			delay: 15000,
 			callback: this.cleanUpFlower,
 			callbackScope: this,
 			args: [this.flower]
