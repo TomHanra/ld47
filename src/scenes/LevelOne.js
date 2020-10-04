@@ -15,15 +15,15 @@ export default class LevelOne extends Phaser.Scene {
 		if (this.time) {
 			this.time.removeAllEvents()
 		}
-		if (this.flower) {
-			this.flower.destroy()
-		}
-		if (this.bee_parts) {
-			for(var i=0; i < this.bee_parts.length; i++) {
-				this.bee_parts[i].collider.destroy()
-				this.bee_parts[i].destroy()
-			}
-		}
+		// if (this.flower) {
+		// 	this.flower.destroy()
+		// }
+		// if (this.bee_parts) {
+		// 	for(var i=0; i < this.bee_parts.length; i++) {
+		// 		this.bee_parts[i].collider.destroy()
+		// 		this.bee_parts[i].destroy()
+		// 	}
+		// }
 		this.bee_speed = 15
 		this.x_direction = 1
 		this.y_direction = 0
