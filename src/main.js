@@ -6,6 +6,7 @@ import LevelThree from './scenes/LevelThree'
 import LevelFour from './scenes/LevelFour'
 import LevelFive from './scenes/LevelFive'
 import PauseScreen from './scenes/PauseScreen'
+import GameEnd from './scenes/GameEnd'
 
 const config = {
 	type: Phaser.AUTO,
@@ -15,7 +16,7 @@ const config = {
 		default: 'arcade'
 	},
 	parent:"game",
-	scene: [LevelOne, LevelTwo, LevelThree, LevelFour, LevelFive, PauseScreen]
+	scene: [LevelOne, LevelTwo, LevelThree, LevelFour, LevelFive, GameEnd, PauseScreen]
 }
 
 export default new Phaser.Game(config)

@@ -15,18 +15,6 @@ export default class LevelOne extends Phaser.Scene {
 	}
 
 	doReset() {
-		// if (this.time) {
-		// 	this.time.removeAllEvents()
-		// }
-		// if (this.flower) {
-		// 	this.flower.destroy()
-		// }
-		// if (this.bee_parts) {
-		// 	for(var i=0; i < this.bee_parts.length; i++) {
-		// 		this.bee_parts[i].collider.destroy()
-		// 		this.bee_parts[i].destroy()
-		// 	}
-		// }
 		this.bee_speed = 15
 		this.x_direction = 1
 		this.y_direction = 0
@@ -35,11 +23,11 @@ export default class LevelOne extends Phaser.Scene {
 			this.bee.x = this.bee_start_x
 			this.bee.y = this.bee_start_y
 			this.bee.angle = 0
-			for(var i=0; i < this.bee_parts.length; i++) {
-				this.bee_parts[i].destroy()
+			for(var i=0; i < this.swarm.length; i++) {
+				this.swarm[i].destroy()
 			}
 		}
-		this.bee_parts = []
+		this.swarm = []
 	}
 
 	preload() {
@@ -74,13 +62,12 @@ export default class LevelOne extends Phaser.Scene {
 	}
 
 	getBeeCount() {
-		return (this.bee_parts.length + 1)
+		return this.swarm.length + 1
 	}
 
 	fail() {
 		this.death.play()
 		this.doReset()
-		//this.scene.restart()
 	}
 
 	createMenu() {
@@ -226,13 +213,13 @@ export default class LevelOne extends Phaser.Scene {
 		var old_angle = this.bee.angle
 		this.bee.x += this.x_direction * this.bee_speed
 		this.bee.y += this.y_direction * this.bee_speed
-		for (var i=0; i < this.bee_parts.length; i++) {
-			let old_old_x = this.bee_parts[i].x
-			let old_old_y = this.bee_parts[i].y
-			let old_old_angle = this.bee_parts[i].angle
-			this.bee_parts[i].x = old_x
-			this.bee_parts[i].y = old_y
-			this.bee_parts[i].angle = old_angle
+		for (var i=0; i < this.swarm.length; i++) {
+			let old_old_x = this.swarm[i].x
+			let old_old_y = this.swarm[i].y
+			let old_old_angle = this.swarm[i].angle
+			this.swarm[i].x = old_x
+			this.swarm[i].y = old_y
+			this.swarm[i].angle = old_angle
 			old_x = old_old_x
 			old_y = old_old_y
 			old_angle = old_old_angle
@@ -243,7 +230,7 @@ export default class LevelOne extends Phaser.Scene {
 			var tail_angle = this.getTail().angle
 			var new_part = this.physics.add.sprite(tail_x - this.x_direction * this.bee.width, tail_y - this.y_direction*this.bee.height, 'bee')
 			new_part.angle = tail_angle
-			this.bee_parts.push(new_part)
+			this.swarm.push(new_part)
 			self = this
 			new_part.collider = this.physics.add.collider(this.bee, new_part, function(_bee, _new_part) {
 				if(self.parts_to_add <= 0) {
@@ -257,10 +244,10 @@ export default class LevelOne extends Phaser.Scene {
 	}
 
 	getTail() {
-		if (this.bee_parts.length == 0) {
+		if (this.swarm.length == 0) {
 			return this.bee
 		}
-		return this.bee_parts[this.bee_parts.length-1]
+		return this.swarm[this.swarm.length-1]
 	}
 
 	addFlower() {

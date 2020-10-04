@@ -1,5 +1,4 @@
 import Phaser from 'phaser'
-import LevelOne from "./LevelOne.js"
 
 export default class PauseScreen extends Phaser.Scene {
 	constructor() {

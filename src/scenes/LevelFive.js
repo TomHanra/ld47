@@ -11,6 +11,6 @@ export default class LevelFour extends LevelOne {
 	}
 
 	nextLevel() {
-		return 'level1'
+		return 'GameEnd'
 	}
 }
