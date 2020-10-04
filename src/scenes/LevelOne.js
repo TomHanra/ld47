@@ -31,6 +31,14 @@ export default class LevelOne extends Phaser.Scene {
 		this.x_direction = 1
 		this.y_direction = 0
 		this.parts_to_add = this.default_parts_to_add
+		if (this.bee) {
+			this.bee.x = this.bee_start_x
+			this.bee.y = this.bee_start_y
+			this.bee.angle = 0
+			for(var i=0; i < this.bee_parts.length; i++) {
+				this.bee_parts[i].destroy()
+			}
+		}
 		this.bee_parts = []
 	}
 
@@ -70,9 +78,9 @@ export default class LevelOne extends Phaser.Scene {
 	}
 
 	fail() {
-		this.doReset()
 		this.death.play()
-		this.scene.restart()
+		this.doReset()
+		//this.scene.restart()
 	}
 
 	createMenu() {
@@ -87,10 +95,10 @@ export default class LevelOne extends Phaser.Scene {
 		this.add.text(825, 280, "Or use the")
 		this.add.text(825, 310, "buttons below")
 
-		this.left = this.add.image(810, 425, "btn-left").setScale(0.75).setOrigin(0,0).setInteractive()
-		this.down = this.add.image(875, 510, "btn-down").setScale(0.75).setOrigin(0,0).setInteractive()
-		this.right = this.add.image(940, 425, "btn-right").setScale(0.75).setOrigin(0,0).setInteractive()
-		this.up = this.add.image(875, 340, "btn-up").setScale(0.75).setOrigin(0,0).setInteractive()
+		this.left = this.add.image(800, 425, "btn-left").setScale(0.85).setOrigin(0,0).setInteractive()
+		this.down = this.add.image(870, 510, "btn-down").setScale(0.85).setOrigin(0,0).setInteractive()
+		this.right = this.add.image(940, 425, "btn-right").setScale(0.85).setOrigin(0,0).setInteractive()
+		this.up = this.add.image(870, 340, "btn-up").setScale(0.85).setOrigin(0,0).setInteractive()
 		var self = this
 		this.left.on('pointerdown', () => self.goLeft() )
 		this.right.on('pointerdown', () => self.goRight() )
