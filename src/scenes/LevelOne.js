@@ -5,6 +5,7 @@ export default class LevelOne extends Phaser.Scene {
 		super('level'+ level_id)
 		this.level_id = level_id
 		this.cursor = undefined
+		this.pause_delay = 100
 		this.default_parts_to_add = 6
 		this.bee_goal = 60
 		this.move_delay = 100
@@ -172,13 +173,15 @@ export default class LevelOne extends Phaser.Scene {
 	}
 
 	doPause() {
-		if (this.registry.get('paused') == this.scene.key) {
-			this.registry.set('paused', undefined)
-		} else {
-			this.registry.set('paused', this.scene.key)
-			this.scene.launch('PauseScreen')
-			this.scene.pause()
-		}
+		var last_paused = this.registry.get('last_paused')
+		// don't allow pause-spam
+		if (last_paused && last_paused + this.pause_delay > this.time.now) return;
+		var last_unpaused = this.registry.get('last_unpaused')
+		if (last_unpaused && last_unpaused + this.pause_delay > this.time.now) return;
+		this.scene.pause()
+		this.registry.set('paused', this.scene.key)
+		this.registry.set('last_paused', this.time.now)
+		this.scene.launch('PauseScreen')
 	}
 
 	update() {
