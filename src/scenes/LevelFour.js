@@ -6,7 +6,7 @@ export default class LevelFour extends LevelOne {
 		super(4)
 
 		this.default_parts_to_add = 1
-		this.bee_goal = 60
+		this.bee_goal = 15
 		this.doReset()
 	}
 

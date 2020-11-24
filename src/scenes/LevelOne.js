@@ -19,10 +19,17 @@ export default class LevelOne extends Phaser.Scene {
 		this.bee_speed = 15
 		this.x_direction = 1
 		this.y_direction = 0
+		this.extra_bees = 0
+		if (this.parts_to_add > 0) {
+			this.extra_bees = this.parts_to_add
+		}
 		this.parts_to_add = this.default_parts_to_add
 		if (this.swarm) {
+			console.log("Had " + this.swarm.length + " bees in swarm");
 			this.parts_to_add = Math.max(this.swarm.length, this.parts_to_add)
 		}
+		// If there were still bees left to add, remember to do that.
+		this.parts_to_add += this.extra_bees
 		if (this.bee) {
 			this.bee.x = this.bee_start_x
 			this.bee.y = this.bee_start_y
@@ -70,6 +77,11 @@ export default class LevelOne extends Phaser.Scene {
 	}
 
 	fail() {
+		// Allow some grace while the game resets
+		if (this.most_recent_death && this.most_recent_death + 10 > this.time.now) {
+			return
+		}
+		this.most_recent_death = this.time.now
 		this.death.play()
 		this.doReset()
 	}
