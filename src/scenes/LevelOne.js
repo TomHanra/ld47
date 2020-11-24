@@ -7,7 +7,7 @@ export default class LevelOne extends Phaser.Scene {
 		this.cursor = undefined
 		this.pause_delay = 100
 		this.default_parts_to_add = 6
-		this.bee_goal = 60
+		this.bee_goal = 30
 		this.move_delay = 100
 		this.wallMap = []
 		this.bee_start_x = undefined
@@ -20,6 +20,9 @@ export default class LevelOne extends Phaser.Scene {
 		this.x_direction = 1
 		this.y_direction = 0
 		this.parts_to_add = this.default_parts_to_add
+		if (this.swarm) {
+			this.parts_to_add = this.swarm.length
+		}
 		if (this.bee) {
 			this.bee.x = this.bee_start_x
 			this.bee.y = this.bee_start_y
