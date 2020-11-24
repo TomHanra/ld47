@@ -21,7 +21,7 @@ export default class LevelOne extends Phaser.Scene {
 		this.y_direction = 0
 		this.parts_to_add = this.default_parts_to_add
 		if (this.swarm) {
-			this.parts_to_add = this.swarm.length
+			this.parts_to_add = Math.max(this.swarm.length, this.parts_to_add)
 		}
 		if (this.bee) {
 			this.bee.x = this.bee_start_x
